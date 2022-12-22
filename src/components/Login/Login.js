@@ -12,8 +12,19 @@ const Login = (props) => {
   const [formIsValid, setFormIsValid] = useState(false);
 
   useEffect(() => {
-      setFormIsValid(enteredEmail.includes('@') && enteredPassword.trim().length > 6)   
+      const identifier = setTimeout(() => {
+          console.log('using form validation useEffect');
+		  // this code now only run once, not on every keystroke
+          setFormIsValid(enteredEmail.includes('@') && enteredPassword.trim().length > 6);   	
+      }, 500);
+
+      return () => {
+          console.log('CLEANUP');
+		clearTimeout(identifier);			// clearing the timer that was set before this cleanup function ran, 
+		// so when the next useEffect function runs we can set a new timer
+      };  
   }, [enteredEmail, enteredPassword]);
+    
 
   const emailChangeHandler = (event) => {
     setEnteredEmail(event.target.value);
