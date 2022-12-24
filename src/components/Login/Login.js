@@ -37,11 +37,11 @@ const Login = (props) => {
   const [emailState, dispatchEmail] = useReducer(emailReducer, {value: '', isValid: false});
   const [passwordState, dispatchPassword] = useReducer(passwordReducer, {value: '', isValid: false});
 
-  /* useEffect(() => {
+   useEffect(() => {
       const identifier = setTimeout(() => {
           console.log('using form validation useEffect');
 		  // this code now only run once, not on every keystroke
-          setFormIsValid(enteredEmail.includes('@') && enteredPassword.trim().length > 6);   	
+          setFormIsValid(emailState.includes('@') && passwordState.trim().length > 6);   	
       }, 500);
 
       return () => {
@@ -49,24 +49,24 @@ const Login = (props) => {
 		clearTimeout(identifier);			// clearing the timer that was set before this cleanup function ran, 
 		// so when the next useEffect function runs we can set a new timer
       };  
-  }, [enteredEmail, enteredPassword]); */
+  }, [emailState, passwordState]);
     
 
   const emailChangeHandler = (event) => {
    // setEnteredEmail(event.target.value);
    dispatchEmail({type: 'USER_INPUT', val: event.target.value});
 
-    setFormIsValid(
+    /* setFormIsValid(
       event.target.value.includes('@') && passwordState.isValid
-    );
+    ); */
   };
 
   const passwordChangeHandler = (event) => {
     dispatchPassword({type: 'USER_INPUT_PASSWORD', val: event.target.value});
 
-    setFormIsValid(
+    /* setFormIsValid(
       event.target.value.trim().length > 6 && emailState.isValid
-    );
+    ); */
   };
 
   const validateEmailHandler = () => {
