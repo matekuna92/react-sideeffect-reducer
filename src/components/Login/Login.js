@@ -37,11 +37,14 @@ const Login = (props) => {
   const [emailState, dispatchEmail] = useReducer(emailReducer, {value: '', isValid: false});
   const [passwordState, dispatchPassword] = useReducer(passwordReducer, {value: '', isValid: false});
 
+  const { isValid: emailIsValid } = emailState;
+  const { isValid: passwordIsValid } = passwordState;
+
    useEffect(() => {
       const identifier = setTimeout(() => {
           console.log('using form validation useEffect');
 		  // this code now only run once, not on every keystroke
-          setFormIsValid(emailState.includes('@') && passwordState.trim().length > 6);   	
+          setFormIsValid(emailIsValid && passwordIsValid);   	
       }, 500);
 
       return () => {
@@ -49,7 +52,7 @@ const Login = (props) => {
 		clearTimeout(identifier);			// clearing the timer that was set before this cleanup function ran, 
 		// so when the next useEffect function runs we can set a new timer
       };  
-  }, [emailState, passwordState]);
+  }, [emailIsValid, passwordIsValid]);
     
 
   const emailChangeHandler = (event) => {
