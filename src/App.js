@@ -36,9 +36,13 @@ function App() {
   // usage: when we need to use an object in multiple components in our app. For example check if User is logged in at shop, my account page, etc...
  // Provider requires a value property, which is the default value. It can now be changed through state.
  // when it changes, the new value is passed down to all consuming components! 
+
+  // get isLoggedIn from state instead of hardCoding false value
+  // Provider value will change every time when isLoggedinState changes, and the new context Object 
+  // will be passed down to the listening components
   return (
-		<AuthContext.Provider value={{isLoggedIn: false}}>
-      		<MainHeader isAuthenticated={isLoggedIn} onLogout={logoutHandler} />
+		<AuthContext.Provider value={{isLoggedIn: isLoggedIn}}>
+      		<MainHeader onLogout={logoutHandler} />
 			<main>
 				{!isLoggedIn && <Login onLogin={loginHandler} />}
 				{isLoggedIn && <Home onLogout={logoutHandler} />}
