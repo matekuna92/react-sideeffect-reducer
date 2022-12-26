@@ -39,6 +39,7 @@ const Login = (props) => {
   const [passwordState, dispatchPassword] = useReducer(passwordReducer, {value: '', isValid: false});
 
   const authCtx = useContext(AuthContext);
+  console.log('authCtx: ', authCtx);
 
   const { isValid: emailIsValid } = emailState;
   const { isValid: passwordIsValid } = passwordState;
