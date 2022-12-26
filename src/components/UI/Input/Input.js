@@ -1,14 +1,24 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useImperativeHandle } from 'react';
 
 import classes from './Input.module.css';
 
-const Input = (props) => {
+// 2nd (rare) argument: it decides if a ref should be set from outside
+// refers to: Login.js ref={emailInputRef} part.. it makes the connection, so internal functions can be used outside 
+
+// Component needs to be wrapped in React.forwardRef. It returns a component, which now can is capable of being bound to a ref
+const Input = React.forwardRef((props, ref) => {
     const inputRef = useRef();
 
-    // runs after every component render cycle - [] empty dependency array: only run once
-    useEffect(() => {
+    const activate = () => {
         inputRef.current.focus();
-    }, []);
+    };
+
+    useImperativeHandle(ref, () => {
+        // return object contains all data that can be used from outside without props-state management
+        return {
+            focus: activate
+        };
+    });
 
     return (
         <div
@@ -27,6 +37,6 @@ const Input = (props) => {
             />
         </div>
     );
-};
+});
 
 export default Input;
